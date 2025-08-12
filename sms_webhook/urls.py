@@ -23,6 +23,10 @@ urlpatterns = [
     
     # REST API
     path('api/', include(router.urls)),
+    path('api/fetch-sms/', views.FetchSMSView.as_view(), name='fetch_sms'),
+    path('api/dashboard-data/', views.DashboardDataView.as_view(), name='dashboard_data'),
+    path('api/auto-fetch-sms/', views.AutoFetchSMSView.as_view(), name='auto_fetch_sms'),
+    path('api/sms-table/', views.SMSTableView.as_view(), name='sms_table'),
 ]
 
 # Add API endpoints for statistics

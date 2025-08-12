@@ -18,6 +18,8 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.utils.decorators import method_decorator
 from .models import SMSMessage, MPESATransaction, WebhookLog
 from .mpesa_parser import mpesa_parser
 from .serializers import SMSMessageSerializer, MPESATransactionSerializer
@@ -140,6 +142,160 @@ class WebhookView(View):
         return ip
 
 
+@method_decorator(csrf_exempt, name='dispatch')
+class FetchSMSView(View):
+    """API endpoint to fetch SMS messages from SMSMobileAPI"""
+    
+    def post(self, request):
+        """Fetch SMS messages from SMSMobileAPI"""
+        try:
+            from .sms_fetcher import sms_fetcher
+            
+            # Fetch all available SMS messages
+            new_messages = sms_fetcher.fetch_and_store_sms(only_unread=False)
+            
+            return JsonResponse({
+                'success': True,
+                'count': len(new_messages),
+                'message': f'Successfully fetched {len(new_messages)} new SMS messages'
+            })
+            
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=500)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class DashboardDataView(View):
+    """API endpoint to get dashboard data for real-time updates"""
+    
+    def get(self, request):
+        """Get dashboard statistics for real-time updates"""
+        try:
+            # Get statistics
+            total_sms = SMSMessage.objects.count()
+            total_mpesa = MPESATransaction.objects.count()
+            unprocessed_sms = SMSMessage.objects.filter(status='received').count()
+            
+            # Get MPESA statistics by direction
+            mpesa_stats = {}
+            for direction in ['received', 'sent', 'paid']:
+                count = MPESATransaction.objects.filter(direction=direction).count()
+                total_amount = MPESATransaction.objects.filter(
+                    direction=direction, 
+                    amount__isnull=False
+                ).aggregate(total=Sum('amount'))['total'] or 0
+                mpesa_stats[direction] = {'count': count, 'total_amount': total_amount}
+            
+            return JsonResponse({
+                'success': True,
+                'total_sms': total_sms,
+                'total_mpesa': total_mpesa,
+                'unprocessed_sms': unprocessed_sms,
+                'mpesa_stats': mpesa_stats,
+            })
+            
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=500)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class AutoFetchSMSView(View):
+    """API endpoint to automatically fetch new SMS messages"""
+    
+    def post(self, request):
+        """Automatically fetch new SMS messages"""
+        try:
+            from .sms_fetcher import sms_fetcher
+            
+            # Get the latest timestamp from our database
+            latest_timestamp = sms_fetcher.get_latest_timestamp()
+            
+            # Fetch only messages newer than our latest
+            new_messages = sms_fetcher.fetch_and_store_sms(
+                only_unread=False, 
+                after_ts=latest_timestamp
+            )
+            
+            return JsonResponse({
+                'success': True,
+                'count': len(new_messages),
+                'new_messages': len(new_messages),
+                'message': f'Found {len(new_messages)} new SMS messages'
+            })
+            
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=500)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class SMSTableView(View):
+    """API endpoint to get SMS table data for real-time updates"""
+    
+    def get(self, request):
+        """Get SMS table data for the current page"""
+        try:
+            from django.core.paginator import Paginator
+            
+            # Get page number from request
+            page_number = request.GET.get('page', 1)
+            
+            # Get SMS messages
+            sms_list = SMSMessage.objects.all().order_by('-time_received')
+            paginator = Paginator(sms_list, 20)  # 20 messages per page
+            
+            try:
+                page_obj = paginator.page(page_number)
+            except:
+                page_obj = paginator.page(1)
+            
+            # Prepare SMS data for the table
+            sms_messages = []
+            for sms in page_obj:
+                sms_messages.append({
+                    'id': sms.id,
+                    'guid': sms.guid,
+                    'number': sms.number,
+                    'message': sms.message,
+                    'status': sms.status,
+                    'direction': sms.direction,
+                    'time_received': sms.time_received.isoformat(),
+                    'get_status_display': sms.get_status_display(),
+                    'get_direction_display': sms.get_direction_display(),
+                })
+            
+            # Prepare pagination data
+            pagination = {
+                'current_page': page_obj.number,
+                'total_pages': paginator.num_pages,
+                'total_count': paginator.count,
+                'start_index': page_obj.start_index(),
+                'end_index': page_obj.end_index(),
+                'has_previous': page_obj.has_previous(),
+                'has_next': page_obj.has_next(),
+            }
+            
+            return JsonResponse({
+                'success': True,
+                'sms_messages': sms_messages,
+                'pagination': pagination,
+            })
+            
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=500)
+
+
 class DashboardView(View):
     """Main dashboard view"""
     
@@ -150,6 +306,13 @@ class DashboardView(View):
         
         # Get recent MPESA transactions
         recent_mpesa = MPESATransaction.objects.select_related('sms_message').order_by('-created_at')[:10]
+        
+        # Get all SMS messages for the table (paginated)
+        from django.core.paginator import Paginator
+        sms_list = SMSMessage.objects.all().order_by('-time_received')
+        paginator = Paginator(sms_list, 20)  # Show 20 messages per page
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         
         # Get statistics
         total_sms = SMSMessage.objects.count()
@@ -169,6 +332,7 @@ class DashboardView(View):
         context = {
             'recent_sms': recent_sms,
             'recent_mpesa': recent_mpesa,
+            'page_obj': page_obj,  # For the SMS table
             'total_sms': total_sms,
             'total_mpesa': total_mpesa,
             'unprocessed_sms': unprocessed_sms,

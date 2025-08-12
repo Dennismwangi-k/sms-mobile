@@ -80,7 +80,7 @@ class MPESATransaction(models.Model):
     direction = models.CharField(max_length=10, choices=DIRECTION_CHOICES)
     amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     name = models.CharField(max_length=200, blank=True)
-    phone = models.CharField(max_length=20, blank=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
     tx_code = models.CharField(max_length=20, blank=True, help_text="MPESA transaction code")
     
     # Transaction timing

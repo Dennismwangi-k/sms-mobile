@@ -104,3 +104,664 @@ Traceback (most recent call last):
     return super().execute(query, params)
 django.db.utils.OperationalError: no such table: sms_webhook_smsmessage
 "GET / HTTP/1.1" 500 136435
+Watching for file changes with StatReloader
+Webhook processed successfully: test_guid_001
+"POST /webhook/sms/ HTTP/1.1" 200 46
+"GET / HTTP/1.1" 200 12978
+"GET / HTTP/1.1" 200 12978
+Error processing webhook: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+Traceback (most recent call last):
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.IntegrityError: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/dennis/Projects/smsmobile/sms_webhook/views.py", line 68, in post
+    sms_message = SMSMessage.objects.create(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.IntegrityError: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+Internal Server Error: /webhook/sms/
+"POST /webhook/sms/ HTTP/1.1" 500 34
+Webhook processed successfully: test_guid_002
+"POST /webhook/sms/ HTTP/1.1" 200 46
+Error processing webhook: NOT NULL constraint failed: sms_webhook_mpesatransaction.phone
+Traceback (most recent call last):
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.IntegrityError: NOT NULL constraint failed: sms_webhook_mpesatransaction.phone
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/dennis/Projects/smsmobile/sms_webhook/views.py", line 83, in post
+    MPESATransaction.objects.create(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.IntegrityError: NOT NULL constraint failed: sms_webhook_mpesatransaction.phone
+Internal Server Error: /webhook/sms/
+"POST /webhook/sms/ HTTP/1.1" 500 34
+Error processing webhook: NOT NULL constraint failed: sms_webhook_mpesatransaction.phone
+Traceback (most recent call last):
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.IntegrityError: NOT NULL constraint failed: sms_webhook_mpesatransaction.phone
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/dennis/Projects/smsmobile/sms_webhook/views.py", line 83, in post
+    MPESATransaction.objects.create(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.IntegrityError: NOT NULL constraint failed: sms_webhook_mpesatransaction.phone
+Internal Server Error: /webhook/sms/
+"POST /webhook/sms/ HTTP/1.1" 500 34
+"GET / HTTP/1.1" 200 18046
+"GET /api/sms/ HTTP/1.1" 200 18029
+"GET /api/mpesa/ HTTP/1.1" 200 16378
+Forbidden: /api/mpesa/statistics/
+"GET /api/mpesa/statistics/ HTTP/1.1" 403 58
+/Users/dennis/Projects/smsmobile/sms_webhook/models.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18046
+Error processing webhook: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+Traceback (most recent call last):
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.IntegrityError: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/dennis/Projects/smsmobile/sms_webhook/views.py", line 68, in post
+    sms_message = SMSMessage.objects.create(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.IntegrityError: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+Internal Server Error: /webhook/sms/
+"POST /webhook/sms/ HTTP/1.1" 500 34
+Error processing webhook: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+Traceback (most recent call last):
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.IntegrityError: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/dennis/Projects/smsmobile/sms_webhook/views.py", line 68, in post
+    sms_message = SMSMessage.objects.create(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.IntegrityError: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+Internal Server Error: /webhook/sms/
+"POST /webhook/sms/ HTTP/1.1" 500 34
+Error processing webhook: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+Traceback (most recent call last):
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.IntegrityError: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/dennis/Projects/smsmobile/sms_webhook/views.py", line 68, in post
+    sms_message = SMSMessage.objects.create(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.IntegrityError: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+Internal Server Error: /webhook/sms/
+"POST /webhook/sms/ HTTP/1.1" 500 34
+Error processing webhook: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+Traceback (most recent call last):
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.IntegrityError: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/dennis/Projects/smsmobile/sms_webhook/views.py", line 68, in post
+    sms_message = SMSMessage.objects.create(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/dennis/Library/Python/3.9/lib/python/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.IntegrityError: UNIQUE constraint failed: sms_webhook_smsmessage.guid
+Internal Server Error: /webhook/sms/
+"POST /webhook/sms/ HTTP/1.1" 500 34
+"GET / HTTP/1.1" 200 18046
+"GET /api/sms/ HTTP/1.1" 200 18029
+"GET /api/mpesa/ HTTP/1.1" 200 16378
+Forbidden: /api/mpesa/statistics/
+"GET /api/mpesa/statistics/ HTTP/1.1" 403 58
+"GET / HTTP/1.1" 200 10618
+Webhook processed successfully: test_guid_001
+"POST /webhook/sms/ HTTP/1.1" 200 46
+Webhook processed successfully: test_guid_002
+"POST /webhook/sms/ HTTP/1.1" 200 46
+Webhook processed successfully: test_guid_003
+"POST /webhook/sms/ HTTP/1.1" 200 46
+Webhook processed successfully: test_guid_004
+"POST /webhook/sms/ HTTP/1.1" 200 46
+"GET / HTTP/1.1" 200 21310
+"GET /api/sms/ HTTP/1.1" 200 19311
+"GET /api/mpesa/ HTTP/1.1" 200 25388
+Forbidden: /api/mpesa/statistics/
+"GET /api/mpesa/statistics/ HTTP/1.1" 403 58
+"GET / HTTP/1.1" 200 21310
+/Users/dennis/Projects/smsmobile/sms_webhook/models.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 21310
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 21310
+/Users/dennis/Projects/smsmobile/sms_webhook/models.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 21310
+/Users/dennis/Projects/smsmobile/sms_webhook/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 21310
+"GET / HTTP/1.1" 200 21310
+"GET / HTTP/1.1" 200 21310
+"GET / HTTP/1.1" 200 32566
+/Users/dennis/Projects/smsmobile/sms_webhook/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 32566
+/Users/dennis/Projects/smsmobile/sms_webhook/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 32566
+"GET / HTTP/1.1" 200 32566
+/Users/dennis/Projects/smsmobile/sms_webhook/urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 32566
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 32566
+/Users/dennis/Projects/smsmobile/sms_webhook/urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 34792
+"GET / HTTP/1.1" 200 34792
+"GET / HTTP/1.1" 200 34859
+"GET / HTTP/1.1" 200 34859
+/Users/dennis/Projects/smsmobile/sms_webhook/views.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/dennis/Projects/smsmobile/sms_webhook/urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /api/dashboard-data/ HTTP/1.1" 200 233
+Watching for file changes with StatReloader
+"GET /api/dashboard-data/ HTTP/1.1" 200 233
+"GET /api/dashboard-data/ HTTP/1.1" 200 233
+"GET / HTTP/1.1" 200 36174
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /api/dashboard-data/ HTTP/1.1" 200 233
+"GET / HTTP/1.1" 200 36174
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /sms/ HTTP/1.1" 200 19311
+"GET /sms/ HTTP/1.1" 200 19311
+"GET / HTTP/1.1" 200 36174
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /api/dashboard-data/ HTTP/1.1" 200 233
+"GET / HTTP/1.1" 200 36174
+"GET /sms/ HTTP/1.1" 200 19311
+/Users/dennis/Projects/smsmobile/sms_webhook/sms_fetcher.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 36174
+"GET /sms/ HTTP/1.1" 200 19311
+"GET / HTTP/1.1" 200 36174
+"GET / HTTP/1.1" 200 36174
+"GET / HTTP/1.1" 200 36174
+"GET /api/dashboard-data/ HTTP/1.1" 200 233
+"GET / HTTP/1.1" 200 36174
+"GET /api/dashboard-data/ HTTP/1.1" 200 233
+"GET /api/dashboard-data/ HTTP/1.1" 200 233
+/Users/dennis/Projects/smsmobile/sms_webhook/sms_fetcher.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 36174
+"GET / HTTP/1.1" 200 36174
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /api/dashboard-data/ HTTP/1.1" 200 233
+"GET / HTTP/1.1" 200 36174
+"GET / HTTP/1.1" 200 80515
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET / HTTP/1.1" 200 80515
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /sms/ HTTP/1.1" 200 161192
+"GET / HTTP/1.1" 200 80515
+"GET / HTTP/1.1" 200 80515
+/Users/dennis/Projects/smsmobile/sms_webhook/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+/Users/dennis/Projects/smsmobile/sms_webhook/urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /sms/ HTTP/1.1" 200 161192
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 83140
+/Users/dennis/Projects/smsmobile/sms_webhook/urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /sms/ HTTP/1.1" 200 161192
+"GET / HTTP/1.1" 200 83140
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET / HTTP/1.1" 200 83140
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET / HTTP/1.1" 200 83140
+"GET /sms/ HTTP/1.1" 200 161192
+"GET / HTTP/1.1" 200 83140
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET / HTTP/1.1" 200 83207
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+Missing required fields: ['date', 'hour', 'time_received', 'message', 'number', 'guid']
+Bad Request: /webhook/sms/
+"POST /webhook/sms/ HTTP/1.1" 400 100
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET / HTTP/1.1" 200 83274
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+Webhook processed successfully: TEST-1755038300
+"POST /webhook/sms/ HTTP/1.1" 200 48
+Webhook processed successfully: MPESA-1755038300-1
+"POST /webhook/sms/ HTTP/1.1" 200 51
+Webhook processed successfully: SAFARICOM-1755038300-2
+"POST /webhook/sms/ HTTP/1.1" 200 55
+Webhook processed successfully: PERSONAL-1755038300-3
+"POST /webhook/sms/ HTTP/1.1" 200 54
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"POST /api/auto-fetch-sms/ HTTP/1.1" 200 87
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET / HTTP/1.1" 200 83287
+/Users/dennis/Projects/smsmobile/sms_webhook/views.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/dennis/Projects/smsmobile/sms_webhook/urls.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Webhook processed successfully: TEST-1755038567
+"POST /webhook/sms/ HTTP/1.1" 200 48
+Webhook processed successfully: MPESA-1755038567-1
+"POST /webhook/sms/ HTTP/1.1" 200 51
+Webhook processed successfully: SAFARICOM-1755038567-2
+"POST /webhook/sms/ HTTP/1.1" 200 55
+Webhook processed successfully: PERSONAL-1755038567-3
+"POST /webhook/sms/ HTTP/1.1" 200 54
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+/Users/dennis/Projects/smsmobile/sms_webhook/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 89033
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /api/sms-table/?page=1 HTTP/1.1" 200 7499
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /api/sms-table/?page=1 HTTP/1.1" 200 7499
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"POST /api/auto-fetch-sms/ HTTP/1.1" 200 87
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET / HTTP/1.1" 200 89199
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /api/sms-table/?page=1 HTTP/1.1" 200 7555
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"POST /api/auto-fetch-sms/ HTTP/1.1" 200 87
+"GET /api/sms-table/ HTTP/1.1" 200 7555
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+"GET /api/dashboard-data/ HTTP/1.1" 200 236
+Webhook processed successfully: TEST-1755038939
+"POST /webhook/sms/ HTTP/1.1" 200 48
+Webhook processed successfully: MPESA-1755038939-1
+"POST /webhook/sms/ HTTP/1.1" 200 51
+Webhook processed successfully: SAFARICOM-1755038939-2
+"POST /webhook/sms/ HTTP/1.1" 200 55
+Webhook processed successfully: PERSONAL-1755038939-3
+"POST /webhook/sms/ HTTP/1.1" 200 54
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+Watching for file changes with StatReloader
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+"POST /api/auto-fetch-sms/ HTTP/1.1" 200 87
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+"GET /api/sms-table/ HTTP/1.1" 200 7486
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+Webhook processed successfully: DEBUG-TEST-1755039022
+"POST /webhook/sms/ HTTP/1.1" 200 54
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+Webhook processed successfully: TEST-1755039104
+"POST /webhook/sms/ HTTP/1.1" 200 48
+Webhook processed successfully: MPESA-1755039104-1
+"POST /webhook/sms/ HTTP/1.1" 200 51
+Webhook processed successfully: SAFARICOM-1755039104-2
+"POST /webhook/sms/ HTTP/1.1" 200 55
+Webhook processed successfully: PERSONAL-1755039104-3
+"POST /webhook/sms/ HTTP/1.1" 200 54
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+"POST /api/auto-fetch-sms/ HTTP/1.1" 200 87
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+"GET / HTTP/1.1" 200 93403
+"GET / HTTP/1.1" 200 93403
+"GET / HTTP/1.1" 200 93403
+"GET / HTTP/1.1" 200 93403
+"GET /sms/ HTTP/1.1" 200 158059
+"GET /sms/ HTTP/1.1" 200 158059
+"GET / HTTP/1.1" 200 93403
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+"GET /api/sms-table/ HTTP/1.1" 200 7413
+Watching for file changes with StatReloader
+Webhook processed successfully: PERSONAL-1755039502-3
+"POST /webhook/sms/ HTTP/1.1" 200 54
+"GET /sms/ HTTP/1.1" 200 158020
+"GET / HTTP/1.1" 200 93359
+"GET / HTTP/1.1" 200 93359
+Webhook processed successfully: TEST-123
+"POST /webhook/sms/ HTTP/1.1" 200 41
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+"GET / HTTP/1.1" 200 93234
+Forbidden (CSRF cookie not set.): /api/auto-fetch-sms/
+"POST /api/auto-fetch-sms/ HTTP/1.1" 403 2870
+Forbidden (CSRF cookie not set.): /api/auto-fetch-sms/
+"POST /api/auto-fetch-sms/ HTTP/1.1" 403 2870
+"GET / HTTP/1.1" 200 93234
+/Users/dennis/Projects/smsmobile/sms_webhook/views.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/dennis/Projects/smsmobile/sms_webhook/views.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/dennis/Projects/smsmobile/sms_webhook/views.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/dennis/Projects/smsmobile/sms_webhook/views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /api/auto-fetch-sms/ HTTP/1.1" 200 87
+"GET /api/dashboard-data/ HTTP/1.1" 200 237
+Webhook processed successfully: TEST-1755039778
+"POST /webhook/sms/ HTTP/1.1" 200 48
+Webhook processed successfully: MPESA-1755039778-1
+"POST /webhook/sms/ HTTP/1.1" 200 51
+Webhook processed successfully: SAFARICOM-1755039778-2
+"POST /webhook/sms/ HTTP/1.1" 200 55
+Webhook processed successfully: PERSONAL-1755039778-3
+"POST /webhook/sms/ HTTP/1.1" 200 54
+"GET /api/dashboard-data/ HTTP/1.1" 200 238
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 93254
+"GET / HTTP/1.1" 200 93254
+"GET / HTTP/1.1" 200 93254
+"GET / HTTP/1.1" 200 93254
+"GET / HTTP/1.1" 200 93254
+"GET / HTTP/1.1" 200 93254
+"GET / HTTP/1.1" 200 93254
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 31008
+"GET / HTTP/1.1" 200 31008
+"GET / HTTP/1.1" 200 31008
+"GET / HTTP/1.1" 200 31008
+"GET / HTTP/1.1" 200 31008
+"GET / HTTP/1.1" 200 31008
+"GET / HTTP/1.1" 200 31008
+"GET /sms/ HTTP/1.1" 200 7807
+"GET / HTTP/1.1" 200 31008
+"GET /sms/ HTTP/1.1" 200 7807
+"GET /mpesa/ HTTP/1.1" 200 7687
+"GET / HTTP/1.1" 200 31008
+"GET / HTTP/1.1" 200 31008
+"GET / HTTP/1.1" 200 26347
+"POST /api/fetch-sms/ HTTP/1.1" 200 85
+"GET /api/dashboard-data/ HTTP/1.1" 200 229
+"GET /api/sms-table/?page=1 HTTP/1.1" 200 7965
+"GET /sms/ HTTP/1.1" 200 160624
+"GET / HTTP/1.1" 200 85341
+"GET /api/dashboard-data/ HTTP/1.1" 200 229
+"GET /api/dashboard-data/ HTTP/1.1" 200 229
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /api/dashboard-data/ HTTP/1.1" 200 229
+"GET /api/sms-table/?page=1 HTTP/1.1" 200 8021
+"GET /api/dashboard-data/ HTTP/1.1" 200 229
+"POST /api/fetch-sms/ HTTP/1.1" 200 83
+"GET /api/dashboard-data/ HTTP/1.1" 200 229
+"GET /api/sms-table/?page=1 HTTP/1.1" 200 8021

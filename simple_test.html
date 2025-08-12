@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple SMS Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .status { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        #console-output { background: #f8f9fa; border: 1px solid #dee2e6; padding: 10px; border-radius: 5px; font-family: monospace; height: 300px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Simple SMS Dashboard Test</h1>
+    
+    <div class="test-section">
+        <h3>🔧 Test API Endpoints</h3>
+        <button onclick="testDashboardData()">Test Dashboard Data API</button>
+        <button onclick="testSMSTable()">Test SMS Table API</button>
+        <button onclick="testAutoFetch()">Test Auto-Fetch API</button>
+        <button onclick="testWebhook()">Test Webhook</button>
+    </div>
+    
+    <div class="test-section">
+        <h3>📊 Console Output</h3>
+        <div id="console-output"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>📋 Test Results</h3>
+        <div id="test-results"></div>
+    </div>
+
+    <script>
+        // Mock console.log to capture output
+        const originalConsoleLog = console.log;
+        const originalConsoleError = console.error;
+        const consoleOutput = document.getElementById('console-output');
+        const testResults = document.getElementById('test-results');
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = `status ${type}`;
+            logEntry.innerHTML = `[${timestamp}] ${message}`;
+            consoleOutput.appendChild(logEntry);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            
+            // Also log to browser console
+            if (type === 'error') {
+                originalConsoleError.call(console, message);
+            } else {
+                originalConsoleLog.call(console, message);
+            }
+        }
+        
+        function showResult(message, type = 'success') {
+            const resultEntry = document.createElement('div');
+            resultEntry.className = `status ${type}`;
+            resultEntry.innerHTML = message;
+            testResults.appendChild(resultEntry);
+        }
+        
+        // Test Dashboard Data API
+        function testDashboardData() {
+            log('🧪 Testing Dashboard Data API...', 'info');
+            
+            fetch('/api/dashboard-data/')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        log(`✅ Dashboard Data: ${data.total_sms} SMS, ${data.total_mpesa} MPESA`, 'success');
+                        showResult(`✅ Dashboard API Working: ${data.total_sms} SMS, ${data.total_mpesa} MPESA`, 'success');
+                    } else {
+                        log(`❌ Dashboard API Error: ${data.error}`, 'error');
+                        showResult(`❌ Dashboard API Error: ${data.error}`, 'error');
+                    }
+                })
+                .catch(error => {
+                    log(`❌ Dashboard API Request Failed: ${error.message}`, 'error');
+                    showResult(`❌ Dashboard API Request Failed: ${error.message}`, 'error');
+                });
+        }
+        
+        // Test SMS Table API
+        function testSMSTable() {
+            log('🧪 Testing SMS Table API...', 'info');
+            
+            fetch('/api/sms-table/')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        log(`✅ SMS Table: ${data.sms_messages.length} messages, ${data.pagination.total_pages} pages`, 'success');
+                        showResult(`✅ SMS Table API Working: ${data.sms_messages.length} messages`, 'success');
+                    } else {
+                        log(`❌ SMS Table API Error: ${data.error}`, 'error');
+                        showResult(`❌ SMS Table API Error: ${data.error}`, 'error');
+                    }
+                })
+                .catch(error => {
+                    log(`❌ SMS Table API Request Failed: ${error.message}`, 'error');
+                    showResult(`❌ SMS Table API Request Failed: ${error.message}`, 'error');
+                });
+        }
+        
+        // Test Auto-Fetch API
+        function testAutoFetch() {
+            log('🧪 Testing Auto-Fetch API...', 'info');
+            
+            fetch('/api/auto-fetch-sms/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    log(`✅ Auto-Fetch: ${data.new_messages} new messages`, 'success');
+                    showResult(`✅ Auto-Fetch API Working: ${data.new_messages} new messages`, 'success');
+                } else {
+                    log(`❌ Auto-Fetch API Error: ${data.error}`, 'error');
+                    showResult(`❌ Auto-Fetch API Error: ${data.error}`, 'error');
+                }
+            })
+            .catch(error => {
+                log(`❌ Auto-Fetch API Request Failed: ${error.message}`, 'error');
+                showResult(`❌ Auto-Fetch API Request Failed: ${error.message}`, 'error');
+            });
+        }
+        
+        // Test Webhook
+        function testWebhook() {
+            log('🧪 Testing Webhook...', 'info');
+            
+            const testSms = {
+                "guid": `TEST-${Date.now()}`,
+                "number": "TEST-NUMBER",
+                "message": "This is a test SMS for testing webhook functionality",
+                "date": "2025-08-12",
+                "hour": "17:00:00",
+                "time_received": "2025-08-12 17:00:00"
+            };
+            
+            fetch('/webhook/sms/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(testSms)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    log(`✅ Webhook: Successfully processed SMS ${data.guid}`, 'success');
+                    showResult(`✅ Webhook Working: SMS ${data.guid} processed`, 'success');
+                } else {
+                    log(`❌ Webhook Error: ${data.error}`, 'error');
+                    showResult(`❌ Webhook Error: ${data.error}`, 'error');
+                }
+            })
+            .catch(error => {
+                log(`❌ Webhook Request Failed: ${error.message}`, 'error');
+                showResult(`❌ Webhook Request Failed: ${error.message}`, 'error');
+            });
+        }
+        
+        // Override console methods
+        console.log = function(...args) {
+            log(args.join(' '), 'info');
+        };
+        
+        console.error = function(...args) {
+            log(args.join(' '), 'error');
+        };
+        
+        // Initialize
+        log('🚀 Simple SMS Test Page Loaded', 'info');
+        log('💡 Click the test buttons to verify API functionality', 'info');
+    </script>
+</body>
+</html>
