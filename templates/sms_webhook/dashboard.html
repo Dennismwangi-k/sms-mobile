@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - SMS Webhook{% endblock %}
+
+{% block content %}
+<div class="px-4 sm:px-6 lg:px-8">
+    <!-- Page Header -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
+        <p class="mt-2 text-gray-600">Monitor your SMS messages and MPESA transactions in real-time</p>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Total SMS -->
+        <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center">
+                        <i class="fas fa-envelope text-white"></i>
+                    </div>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">Total SMS</p>
+                    <p class="text-2xl font-semibold text-gray-900">{{ total_sms }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total MPESA -->
+        <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center">
+                        <i class="fas fa-money-bill-wave text-white"></i>
+                    </div>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">MPESA Transactions</p>
+                    <p class="text-2xl font-semibold text-gray-900">{{ total_mpesa }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unprocessed SMS -->
+        <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="w-8 h-8 bg-yellow-500 rounded-md flex items-center justify-center">
+                        <i class="fas fa-clock text-white"></i>
+                    </div>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">Unprocessed</p>
+                    <p class="text-2xl font-semibold text-gray-900">{{ unprocessed_sms }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Webhook Status -->
+        <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="w-8 h-8 bg-purple-500 rounded-md flex items-center justify-center">
+                        <i class="fas fa-link text-white"></i>
+                    </div>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">Webhook Status</p>
+                    <p class="text-2xl font-semibold text-green-600">Active</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MPESA Statistics -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">MPESA Transaction Summary</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {% for direction, stats in mpesa_stats.items %}
+            <div class="text-center">
+                <div class="text-2xl font-bold text-gray-900">{{ stats.count }}</div>
+                <div class="text-sm text-gray-600 capitalize">{{ direction }}</div>
+                {% if stats.total_amount %}
+                <div class="text-lg font-semibold text-green-600">Ksh {{ stats.total_amount|floatformat:2 }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Recent SMS Messages -->
+        <div class="bg-white rounded-lg shadow-md">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-900">Recent SMS Messages</h3>
+            </div>
+            <div class="divide-y divide-gray-200">
+                {% for sms in recent_sms %}
+                <div class="px-6 py-4 hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium text-gray-900 truncate">{{ sms.number }}</p>
+                            <p class="text-sm text-gray-500 truncate">{{ sms.message|truncatechars:60 }}</p>
+                            <div class="flex items-center mt-2 space-x-2">
+                                <span class="status-badge status-{{ sms.status }}">
+                                    {{ sms.get_status_display }}
+                                </span>
+                                <span class="status-badge direction-{{ sms.direction }}">
+                                    {{ sms.get_direction_display }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="text-right text-sm text-gray-500">
+                            <div>{{ sms.time_received|date:"M d" }}</div>
+                            <div>{{ sms.time_received|time:"H:i" }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="px-6 py-8 text-center text-gray-500">
+                    <i class="fas fa-inbox text-4xl mb-4"></i>
+                    <p>No SMS messages yet</p>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="px-6 py-4 border-t border-gray-200">
+                <a href="{% url 'sms_list' %}" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                    View all SMS messages →
+                </a>
+            </div>
+        </div>
+
+        <!-- Recent MPESA Transactions -->
+        <div class="bg-white rounded-lg shadow-md">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-900">Recent MPESA Transactions</h3>
+            </div>
+            <div class="divide-y divide-gray-200">
+                {% for transaction in recent_mpesa %}
+                <div class="px-6 py-4 hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm font-medium text-gray-900">{{ transaction.tx_code|default:"N/A" }}</span>
+                                {% if transaction.is_valid %}
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                    <i class="fas fa-check mr-1"></i>Valid
+                                </span>
+                                {% endif %}
+                            </div>
+                            <p class="text-sm text-gray-500">{{ transaction.name|default:"Unknown" }}</p>
+                            <div class="flex items-center mt-2 space-x-2">
+                                <span class="text-lg font-semibold text-green-600">
+                                    {% if transaction.amount %}Ksh {{ transaction.amount|floatformat:2 }}{% else %}N/A{% endif %}
+                                </span>
+                                <span class="status-badge direction-{{ transaction.direction }}">
+                                    {{ transaction.get_direction_display }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="text-right text-sm text-gray-500">
+                            {% if transaction.tx_datetime_local %}
+                            <div>{{ transaction.tx_datetime_local|date:"M d" }}</div>
+                            <div>{{ transaction.tx_datetime_local|time:"H:i" }}</div>
+                            {% else %}
+                            <div>{{ transaction.created_at|date:"M d" }}</div>
+                            <div>{{ transaction.created_at|time:"H:i" }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="px-6 py-8 text-center text-gray-500">
+                    <i class="fas fa-money-bill-wave text-4xl mb-4"></i>
+                    <p>No MPESA transactions yet</p>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="px-6 py-4 border-t border-gray-200">
+                <a href="{% url 'mpesa_list' %}" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                    View all MPESA transactions →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Webhook Information -->
+    <div class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
+        <div class="flex items-start">
+            <div class="flex-shrink-0">
+                <i class="fas fa-info-circle text-blue-400 text-xl"></i>
+            </div>
+            <div class="ml-3">
+                <h3 class="text-sm font-medium text-blue-800">Webhook Configuration</h3>
+                <div class="mt-2 text-sm text-blue-700">
+                    <p>Your webhook endpoint is ready to receive SMS messages from SMSMobileAPI:</p>
+                    <code class="block mt-2 p-2 bg-blue-100 rounded text-blue-800 font-mono text-xs">
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'webhook_sms' %}
+                    </code>
+                    <p class="mt-2">Configure this URL in your SMSMobileAPI dashboard to start receiving SMS messages.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
